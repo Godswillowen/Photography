@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donald Photography | Premium Visual Storytelling</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+        
+        /* Preloader with "Say Cheese" Text */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('Hero-img.jpg');
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            flex-direction: column;
+            background-position: center;
+            background-size: cover;
+        }
+        
+        .cheese-text {
+            font-size: clamp(2rem, 8vw, 5rem);
+            color: white;
+            font-weight: 700;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            animation: pulse 1.5s infinite alternate;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .cheese-text i , .mobile-menu-btn{
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes pulse {
+            from { opacity: 0.3; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1.1); text-shadow: 0 0 15px rgba(255, 255, 255, 0.7); }
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* Camera Snap Animation Elements */
+        .shutter {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 1000;
+            animation: shutterOpen 1.5s 1.5s forwards;
+        }
+        
+        .aperture {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #333 0%, #000 70%);
+            transform: translate(-50%, -50%);
+            z-index: 1001;
+            animation: apertureOpen 1s 1.8s forwards;
+        }
+        
+        .flash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 1002;
+            opacity: 0;
+            animation: cameraFlash 0.5s 2.8s forwards;
+            pointer-events: none;
+        }
+        
+        @keyframes shutterOpen {
+            0% { opacity: 1; }
+            70% { opacity: 1; }
+            100% { opacity: 0; display: none; }
+        }
+        
+        @keyframes apertureOpen {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+        }
+        
+        @keyframes cameraFlash {
+            0% { opacity: 0; }
+            10% { opacity: 1; }
+            100% { opacity: 0; display: none; }
+        }
+        
+        /* Navigation - Professional Style */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 100;
+            padding: 15px 0;
+            backdrop-filter: blur(5px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: white;
+            letter-spacing: 2px;
+        }
+        
+        .logo span {
+            color: #f0c14b;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 400;
+            letter-spacing: 1px;
+            position: relative;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+        
+        .nav-links a:hover {
+            color: #f0c14b;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #f0c14b;
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Header Section */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('photo.jpg') no-repeat center center/cover;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            z-index: 0;
+        }
+        
+        header h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            opacity: 0;
+            animation: fadeIn 1s 3.1s forwards;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            letter-spacing: 3px;
+        }
+        
+        header .tagline {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            font-weight: 300;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeIn 1s 3.3s forwards;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            letter-spacing: 5px;
+            text-transform: uppercase;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Camera Icon */
+        .camera-icon {
+            width: 80px;
+            height: 60px;
+            background: #222;
+            border-radius: 5px;
+            position: relative;
+            opacity: 0;
+            animation: fadeIn 1s 3.5s forwards;
+            z-index: 1;
+            cursor: pointer;
+            transition: transform 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .camera-icon:hover {
+            transform: scale(1.1);
+        }
+        
+        .camera-icon .lens {
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle, #555 0%, #111 70%);
+            border-radius: 50%;
+            position: absolute;
+            top: 15px;
+            left: 25px;
+            border: 3px solid #444;
+        }
+        
+        .camera-icon .shutter-btn {
+            width: 20px;
+            height: 20px;
+            background: #f0c14b;
+            border-radius: 50%;
+            position: absolute;
+            top: 5px;
+            right: 10px;
+        }
+        
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 20px 40px;
+        }
+        
+        section {
+            margin: 100px 0;
+        }
+        
+        h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 50px;
+            text-align: center;
+            position: relative;
+            letter-spacing: 2px;
+            color: #222;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: #f0c14b;
+        }
+        
+        /* Portfolio Gallery - Modern Style */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+        
+        .portfolio-item {
+            position: relative;
+            overflow: hidden;
+            height: 400px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease-out;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        
+        .portfolio-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.7));
+            z-index: 1;
+        }
+        
+        .portfolio-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.25, 0.45, 0.45, 0.95);
+        }
+        
+        .portfolio-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .portfolio-item .info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 25px;
+            z-index: 2;
+            transform: translateY(20px);
+            transition: all 0.5s cubic-bezier(0.25, 0.45, 0.45, 0.95);
+            opacity: 0;
+        }
+        
+        .portfolio-item:hover .info {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .portfolio-item h3 {
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .portfolio-item p {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.8);
+            display: flex;
+            align-items: center;
+        }
+        
+        .portfolio-item p i {
+            margin-right: 8px;
+            color: #f0c14b;
+        }
+        
+        /* Services Section */
+        .services-section {
+            background: grey;
+            padding: 100px 0;
+            margin: 100px 0;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .service-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+            border-top: 4px solid #f0c14b;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .service-icon {
+            font-size: 3rem;
+            color: #f0c14b;
+            margin-bottom: 20px;
+        }
+        
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #222;
+        }
+        
+        .service-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .service-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 20px;
+        }
+        
+        .service-btn {
+            background: #222;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 0.9rem;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .service-btn:hover {
+            background: #f0c14b;
+            color: #222;
+        }
+        
+        /* About Section */
+        .about-section {
+            background: #111;
+            color: white;
+            padding: 100px 0;
+            position: relative;
+        }
+        
+        .about-section h2 {
+            color: white;
+        }
+        
+        .about-section h2::after {
+            background: #f0c14b;
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            margin-top: 50px;
+        }
+        
+        .about-img {
+            flex: 1;
+            min-width: 300px;
+            height: 500px;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.5s 0.2s;
+            border: 5px solid #f0c14b;
+        }
+        
+        .about-img.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .about-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: contrast(110%) brightness(90%);
+        }
+        
+        .about-text {
+            flex: 1;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 0.5s 0.4s;
+        }
+        
+        .about-text.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .about-text p {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            color: #ccc;
+        }
+        
+        .signature {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: #f0c14b;
+            margin-top: 30px;
+        }
+        
+        /* Stats Section */
+        .stats-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1517638851339-a711cfcf3279?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            padding: 100px 0;
+            color: white;
+            text-align: center;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .stat-item {
+            padding: 30px;
+        }
+        
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #f0c14b;
+            margin-bottom: 10px;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .stat-label {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        /* Contact Section */
+        .contact-section {
+            padding: 100px 0;
+        }
+        
+        .contact-container {
+            display: flex;
+            gap: 50px;
+            margin-top: 50px;
+        }
+        
+        .contact-info {
+            flex: 1;
+        }
+        
+        .contact-card {
+            background: #f5f5f5;
+            padding: 40px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        
+        .contact-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #222;
+        }
+        
+        .contact-detail {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .contact-detail i {
+            font-size: 1.2rem;
+            color: #f0c14b;
+            width: 40px;
+        }
+        
+        .contact-map {
+            flex: 1;
+            height: 400px;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .contact-map iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* Footer */
+        footer {
+            background: #111;
+            color: white;
+            padding: 80px 0 30px;
+            position: relative;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            padding: 0 20px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #f0c14b;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: #f0c14b;
+        }
+        
+        .footer-column p {
+            color: #aaa;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .footer-links li {
+            list-style: none;
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #f0c14b;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: #f0c14b;
+            color: #222;
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 50px;
+            margin-top: 50px;
+            border-top: 1px solid #222;
+        }
+        
+        .copyright {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .about-img {
+                width: 100%;
+                min-width: auto;
+            }
+            
+            .contact-container {
+                flex-direction: column;
+            }
+            
+            .contact-map {
+                height: 300px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.9);
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
+                gap: 20px;
+                transform: translateY(-150%);
+                transition: transform 0.3s ease-out;
+                z-index: 99;
+            }
+            
+            .nav-links.active {
+                transform: translateY(0);
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .cheese-text {
+                font-size: 2rem;
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Preloader with "Say Cheese" Text -->
+    <div class="preloader">
+        <div class="cheese-text">Smile! <i class="fas fa-camera"></i></div>
+    </div>
+    
+    <!-- Camera Snap Effect Elements -->
+    <div class="shutter"></div>
+    <div class="aperture"></div>
+    <div class="flash"></div>
+    
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Donald <span>Photography</span></div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-camera-retro"></i>
+            </button>
+            <div class="nav-links" id="navLinks">
+                <a href="#portfolio">Portfolio</a>
+                <a href="#services">Services</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Header Section -->
+    <header>
+        <h1>CAPTURING TIMELESS MOMENTS</h1>
+        <p class="tagline">Premium Photography Services</p>
+        <div class="camera-icon" id="cameraIcon">
+            <div class="lens"></div>
+            <div class="shutter-btn"></div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Portfolio Section -->
+        <section id="portfolio">
+            <h2>Portfolio</h2>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <img src="https://images.unsplash.com/photo-1493863641943-9b68992a8d07?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Portrait Photography">
+                    <div class="info">
+                        <h3>Urban Portraits</h3>
+                        <p><i class="fas fa-camera"></i> Canon EOS R5 | 85mm f/1.2</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Landscape Photography">
+                    <div class="info">
+                        <h3>Mountain Dawn</h3>
+                        <p><i class="fas fa-camera"></i> Sony A7R IV | 24-70mm f/2.8</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Wedding Photography">
+                    <div class="info">
+                        <h3>Wedding Day</h3>
+                        <p><i class="fas fa-camera"></i> Fujifilm GFX 100 | 56mm f/1.2</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="https://images.unsplash.com/photo-1534957753291-64d667ce2927?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Street Photography">
+                    <div class="info">
+                        <h3>City Rhythms</h3>
+                        <p><i class="fas fa-camera"></i> Leica M10 | 35mm f/1.4</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="https://images.unsplash.com/photo-1504208434309-cb69f4fe52b0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Wildlife Photography">
+                    <div class="info">
+                        <h3>Wild Encounters</h3>
+                        <p><i class="fas fa-camera"></i> Nikon D850 | 200-500mm f/5.6</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Fashion Photography">
+                    <div class="info">
+                        <h3>Fashion Editorial</h3>
+                        <p><i class="fas fa-camera"></i> Hasselblad H6D | 80mm f/2.8</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Services Section -->
+        <section class="services-section" id="services">
+            <div class="container">
+                <h2>Services</h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-ring"></i>
+                        </div>
+                        <h3>Framless Portrait</h3>
+                        <p>Capture your special day with timeless, elegant photography that tells your unique love story.</p>
+                        <div class="service-price">$2,500+</div>
+                        <button class="service-btn">Book Now</button>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-portrait"></i>
+                        </div>
+                        <h3>Portrait Art DEC.</h3>
+                        <p>Professional portraits for individuals, couples, and families in stunning natural light.</p>
+                        <div class="service-price">$450+</div>
+                        <button class="service-btn">Book Now</button>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <h3>Frame Portrait</h3>
+                        <p>High-quality product and architectural photography for businesses and brands.</p>
+                        <div class="service-price">$800/day</div>
+                        <button class="service-btn">Book Now</button>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-mountain"></i>
+                        </div>
+                        <h3>Session Shot</h3>
+                        <p>Breathtaking landscape photography for home or office decor.</p>
+                        <div class="service-price">From $200</div>
+                        <button class="service-btn">View Gallery</button>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-tshirt"></i>
+                        </div>
+                        <h3>Birthday Shot + Brand</h3>
+                        <p>Editorial and lookbook photography for designers and brands.</p>
+                        <div class="service-price">$1,200/day</div>
+                        <button class="service-btn">Book Now</button>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3>Special Session (indoor)</h3>
+                        <p>Learn photography techniques from a professional in intimate workshop settings.</p>
+                        <div class="service-price">$300/session</div>
+                        <button class="service-btn">Learn More</button>
+                    </div>
+
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3>Session Shot (indoor)</h3>
+                        <p>Learn photography techniques from a professional in intimate workshop settings.</p>
+                        <div class="service-price">$300/session</div>
+                        <button class="service-btn">Learn More</button>
+                    </div>
+
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3>Session Shot (outdoor)</h3>
+                        <p>Learn photography techniques from a professional in intimate workshop settings.</p>
+                        <div class="service-price">$300/session</div>
+                        <button class="service-btn">Learn More</button>
+                    </div>
+
+
+
+            </div>
+        </section>
+        
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <div class="container">
+                <h2 style="color: gold;">By The Numbers</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">1000+</div>
+                        <div class="stat-label">Satisfied Clients</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">3,000+</div>
+                        <div class="stat-label">Photos Captured</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">5+</div>
+                        <div class="stat-label">Awards Won</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- About Section -->
+        <section class="about-section" id="about">
+            <div class="container">
+                <h2>About Me</h2>
+                <div class="about-content">
+                    <div class="about-img">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Photographer">
+                    </div>
+                    <div class="about-text">
+                        <p>With over a decade of experience behind the lens, I specialize in creating images that are not just seen, but felt. My approach combines technical precision with artistic intuition to capture authentic moments and emotions.</p>
+                        <p>After studying Fine Arts at the Rhode Island School of Design, I began my career as a photojournalist before transitioning to commercial and artistic photography. My work has been featured in National Geographic, Vogue, and numerous gallery exhibitions worldwide.</p>
+                        <p>When I'm not shooting for clients, you can find me teaching photography workshops or working on personal projects that explore the intersection of light, shadow, and human emotion.</p>
+                        <div class="signature">Donald Photography</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Contact Section -->
+        <section class="contact-section" id="contact">
+            <div class="container">
+                <h2>Contact Me</h2>
+                <div class="contact-container">
+                    <div class="contact-info">
+                        <div class="contact-card">
+                            <h3>Get In Touch</h3>
+                            <div class="contact-detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>123 Photography Ave, New York, NY</span>
+                            </div>
+                            <div class="contact-detail">
+                                <i class="fas fa-phone"></i>
+                                <span>+1 (234) 567-890</span>
+                            </div>
+                            <div class="contact-detail">
+                                <i class="fas fa-envelope"></i>
+                                <span>hello@donaldphoto.com</span>
+                            </div>
+                            <div class="contact-detail">
+                                <i class="fas fa-clock"></i>
+                                <span>Mon-Fri: 9AM - 6PM</span>
+                            </div>
+                        </div>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    <div class="contact-map">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.2155732918656!2d-73.9878449242394!3d40.74844097138986!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9b3117469%3A0xd134e199a405a163!2sEmpire%20State%20Building!5e0!3m2!1sen!2sus!4v1689876423586!5m2!1sen!2sus" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Donald Photography</h3>
+                <p>Premium photography services specializing in capturing life's most precious moments with artistic vision and technical excellence.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-500px"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Services</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Wedding Photography</a></li>
+                    <li><a href="#">Portrait Sessions</a></li>
+                    <li><a href="#">Commercial Work</a></li>
+                    <li><a href="#">Photography Workshops</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Newsletter</h3>
+                <p>Subscribe to receive updates and special offers.</p>
+                <form style="margin-top: 20px;">
+                    <input type="email" placeholder="Your Email" style="width: 100%; padding: 10px; border: 1px solid #333; background: #222; color: white; border-radius: 3px; margin-bottom: 10px;">
+                    <button type="submit" style="background: #f0c14b; color: #222; border: none; padding: 10px 20px; border-radius: 3px; cursor: pointer; font-weight: 600;">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="copyright">© 2023 Donald Photography. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script>
+        // Remove preloader after animation
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.querySelector('.preloader').style.display = 'none';
+            }, 1500);
+        });
+        
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            this.innerHTML = navLinks.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-camera-retro"></i>';
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-camera-retro"></i>';
+            });
+        });
+        
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all animatable elements
+        document.querySelectorAll('.portfolio-item, .about-img, .about-text, .service-card').forEach(item => {
+            observer.observe(item);
+        });
+        
+        // Enhanced camera flash effect (works on mobile)
+        const cameraIcon = document.getElementById('cameraIcon');
+        
+        function triggerFlash() {
+            // Create flash element
+            const flash = document.createElement('div');
+            flash.className = 'flash-effect';
+            flash.style.position = 'fixed';
+            flash.style.top = '0';
+            flash.style.left = '0';
+            flash.style.width = '100%';
+            flash.style.height = '100%';
+            flash.style.backgroundColor = 'white';
+            flash.style.zIndex = '9998';
+            flash.style.opacity = '0';
+            flash.style.pointerEvents = 'none';
+            
+            // Add animation
+            flash.style.animation = 'cameraFlash 0.3s forwards';
+            document.body.appendChild(flash);
+            
+            // Play shutter sound
+            const shutterSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-camera-shutter-1510.mp3');
+            shutterSound.play().catch(e => console.log("Auto-play prevented:", e));
+            
+            // Remove after animation
+            setTimeout(() => {
+                document.body.removeChild(flash);
+            }, 300);
+        }
+        
+        // Add both touch and click events
+        if (cameraIcon) {
+            cameraIcon.addEventListener('click', triggerFlash);
+            cameraIcon.addEventListener('touchend', function(e) {
+                e.preventDefault(); // Prevent double-tap zoom on mobile
+                triggerFlash();
+            });
+        }
+        
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Check if elements are already in view on load
+        document.addEventListener('DOMContentLoaded', () => {
+            checkVisible();
+        });
+        
+        function checkVisible() {
+            const elements = document.querySelectorAll('.portfolio-item, .about-img, .about-text, .service-card');
+            elements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                const isVisible = (
+                    rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
+                    rect.bottom >= 0
+                );
+                
+                if (isVisible) {
+                    el.classList.add('visible');
+                }
+            });
+        }
+        
+        // Recheck on scroll
+        window.addEventListener('scroll', () => {
+            checkVisible();
+        });
+    </script>
+</body>
+</html>
